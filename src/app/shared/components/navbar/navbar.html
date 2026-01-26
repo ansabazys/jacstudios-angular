@@ -1,0 +1,53 @@
+<header class="flex z-20 backdrop-blur-3xl w-full justify-between fixed items-center py-5 px-5 md:px-15">
+  
+  <!-- Left section -->
+  <section class="z-10 flex md:gap-8 justify-start gap-5 text-xs">
+    <button class="cursor-pointer">
+      <span class="md:hidden">
+        <!-- Search Icon Placeholder -->
+        <i class="icon-search"></i>
+      </span>
+      <span class="hidden md:block">SEARCH</span>
+    </button>
+
+    <button>
+      <!-- Wishlist Icon Placeholder -->
+      WISHLIST
+    </button>
+  </section>
+
+  <!-- Desktop Navigation -->
+  <nav class="left-0 fixed md:flex w-full justify-center hidden">
+    <ul class="flex tracking-tight justify-center items-center gap-10 text-xs">
+      <a routerLink="/store" class="underline font-bold">SHOP ALL</a>
+      <a>WHAT'S NEW</a>
+      <a routerLink="/" class="text-2xl font-black tracking-tighter italic">JAC</a>
+      <a>HOT SALE</a>
+      <a routerLink="/orders">MY ORDERS</a>
+    </ul>
+  </nav>
+
+  <!-- Mobile Logo -->
+  <a routerLink="/" class="text-2xl fixed left-0 font-black w-full flex justify-center tracking-tighter italic md:hidden">
+    JAC
+  </a>
+
+  <!-- Right section -->
+  <section class="flex z-10 md:gap-8 justify-end gap-5 text-xs">
+    <!-- Auth Links -->
+    <a routerLink="/account" class="hidden md:flex">ACCOUNT</a>
+    <a routerLink="/login" class="hidden md:flex">LOGIN</a>
+
+    <!-- Cart -->
+    <button class="flex gap-1">
+      <a routerLink="/cart">BAG</a>
+      <span>(0)</span>
+    </button>
+
+    <!-- Mobile Menu -->
+    <button class="md:hidden">
+      MENU
+    </button>
+  </section>
+
+</header>
