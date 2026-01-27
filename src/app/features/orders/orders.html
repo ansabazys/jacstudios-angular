@@ -1,0 +1,66 @@
+<!-- Empty state -->
+<div *ngIf="!loading" class="p-20">
+  <ng-container *ngIf="(ordersList$ | async) as orders; else loadingTemplate">
+    <div *ngIf="orders.length === 0" class="text-center text-black/50 py-10">
+      <p>You have no orders yet.</p>
+      <button class="mt-3 px-4 py-2 bg-black text-white text-xs" routerLink="/">
+        CONTINUE SHOPPING
+      </button>
+    </div>
+
+    <!-- Orders list -->
+    <div *ngIf="orders.length > 0" class="flex flex-col gap-6">
+      <div *ngFor="let order of orders" class="border border-black/10 p-5 flex flex-col gap-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b pb-2">
+          <h2 class="font-semibold text-sm">
+            Order #{{ order._id.slice(-6) }}
+          </h2>
+          <p class="text-black/50 text-[0.65rem]">
+            Placed on {{ order.createdAt | date }}
+          </p>
+        </div>
+
+        <!-- Items -->
+        <div class="flex flex-col gap-3">
+          <div *ngFor="let item of order.items" class="flex justify-between border-b pb-2">
+            <div>
+              <p class="font-medium">₹{{ item.price }}</p>
+              <p class="text-black/50 text-[0.65rem]">
+                Qty: {{ item.quantity }} | Size: {{ item.selectedSize }}
+              </p>
+            </div>
+            <p>₹{{ item.price }}</p>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="flex justify-between items-center pt-3">
+          <span
+            class="px-3 py-1 rounded-full text-white"
+            [ngClass]="{
+              'bg-green-500': order.orderStatus === 'Delivered',
+              'bg-yellow-500': order.orderStatus === 'pending',
+              'bg-gray-400': order.orderStatus === 'canceled'
+            }"
+          >
+            {{ order.orderStatus }}
+          </span>
+
+          <!-- Cancel button example -->
+          <button
+            *ngIf="order.orderStatus === 'pending'"
+            class="px-3 py-1 text-xs border"
+            (click)="cancelOrder(order._id)"
+          >
+            CANCEL
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loadingTemplate>
+  <p class="text-center py-10">Loading orders...</p>
+</ng-template>
