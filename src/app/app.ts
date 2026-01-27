@@ -15,6 +15,6 @@ export class App implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.checkAuth();
+    this.authService.checkAuth().subscribe()
   }
 }

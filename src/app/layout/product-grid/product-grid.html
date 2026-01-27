@@ -1,0 +1,21 @@
+<div class="flex flex-col order-3 md:order-2 justify-center">
+  <div class="w-full flex flex-wrap justify-center">
+
+    <div
+      *ngFor="let product of products"
+      class="relative w-[380px] text-center cursor-pointer"
+      (click)="goToProduct(product._id)"
+    >
+      <div>
+        <img [src]="'http://localhost:3000/uploads/' + product.images[0]" [alt]="product.title" />
+      </div>
+      <div class="pt-2 pb-5 text-start">
+        <h1 class="uppercase tracking-tighter">{{ product.title }}</h1>
+        <h1 class="text-sm font-semibold"><span>Rs.</span>{{ product.price }}</h1>
+      </div>
+    </div>
+  </div>
+  <!-- 
+  Pagination Component
+  <app-pagination></app-pagination> -->
+</div>

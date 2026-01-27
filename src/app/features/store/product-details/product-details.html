@@ -1,0 +1,51 @@
+<!-- src/app/pages/store/product-details/product-details.component.html -->
+<div class="py-20 px-6 md:px-20" *ngIf="product">
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Images -->
+    <div class="w-full md:w-1/2 flex flex-col gap-4">
+      <img
+       [src]="'http://localhost:3000/uploads/' + product()?.images"
+        alt="{{ product()?.title }}"
+        class="w-full object-cover"
+      />
+    </div>
+
+    <!-- Product Info -->
+    <div class="w-full md:w-1/2 flex flex-col gap-6">
+      <div>
+        <h1 class="tracking-tight uppercase text-xl md:text-2xl">
+          {{ product()?.title }}
+        </h1>
+        <p class="font-semibold text-lg md:text-xl">
+          Rs. {{ product()?.price }}
+        </p>
+        <p class="text-sm text-gray-500">MRP inclusive of all taxes</p>
+      </div>
+
+      <!-- Sizes -->
+      <div class="flex border border-gray-200">
+        <button
+          *ngFor="let size of product()?.sizes"
+          [disabled]="size.stock < 1"
+          (click)="selectSize(size.size)"
+          class="px-4 py-2 border-r flex-1 text-center"
+          [ngClass]="{
+            'border-black font-bold': selectedSize === size.size,
+            'opacity-30': size.stock < 1
+          }"
+        >
+          {{ size.size }} ({{ size.stock }})
+        </button>
+      </div>
+      <p *ngIf="error" class="text-red-500 text-sm">{{ error }}</p>
+
+      <!-- Add to Cart -->
+      <button
+       (click)="addToCart()"
+        class="bg-black text-white py-3 px-6 rounded hover:bg-gray-800 transition w-full"
+      >
+        Add to Bag
+      </button>
+    </div>
+  </div>
+</div>

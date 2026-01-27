@@ -1,0 +1,37 @@
+<!-- home.component.html -->
+<section class="relative w-full h-screen overflow-hidden">
+  <!-- Background Video -->
+  <video
+    src="https://res.cloudinary.com/dpxv43jt9/video/upload/v1762514708/hero_ksmbok.mp4"
+    alt="Hero"
+    class="absolute inset-0 w-full h-full object-cover"
+    loop
+    muted
+    autoplay
+    playsinline
+  ></video>
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <!-- Content -->
+  <div
+    class="relative z-10 flex flex-col items-center justify-center text-center h-full text-white px-6"
+  >
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tighter">
+      Elevate Your Everyday Style
+    </h1>
+
+    <p class="text-white/80 max-w-xl text-sm md:text-base mb-8">
+      Discover premium quality streetwear and essentials designed for
+      comfort, confidence, and timeless appeal.
+    </p>
+
+    <button
+      routerLink="/store"
+      class="bg-white text-black font-semibold px-8 py-3 rounded-full shadow-md hover:bg-gray-100 transition"
+    >
+      Shop Now
+    </button>
+  </div>
+</section>

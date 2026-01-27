@@ -1,0 +1,41 @@
+<div
+  class="w-1/2 p-5 left-0 md:ml-15 md:fixed md:p-0 h-full md:w-fit md:border-0 md:h-fit order-1 border-y border-black/15"
+>
+  <div
+    class="text-xs h-full flex justify-center text-center md:items-start flex-col gap-4 row-start-1 col-start-1"
+  >
+    <!-- Mobile toggle button -->
+    <button (click)="toggleMenu()">CATEGORIES</button>
+
+    <!-- Menu Modal for mobile -->
+    <!-- <app-menu-modal
+      *ngIf="isOpen"
+      [isMenuOpen]="isOpen"
+      [menuData]="categories"
+      (closeMenu)="isOpen = false"
+    ></app-menu-modal> -->
+
+    <!-- Desktop categories list -->
+    <ul class="md:flex hidden flex-col gap-1">
+      @for (data of categories(); track $index) {
+        <button
+          (click)="navigateToCategory(data._id)"
+          class="text-start hover:underline uppercase cursor-pointer"
+          [class.underline]="currentCategoryId === data._id"
+        >
+          {{ data.title }}
+        </button>
+      }
+
+      <!-- <li *ngFor="let data of categories">
+        <button
+          (click)="navigateToCategory(data._id)"
+          class="text-start hover:underline uppercase cursor-pointer"
+          [class.underline]="currentCategoryId === data._id"
+        >
+          {{ data.title }}
+        </button>
+      </li> -->
+    </ul>
+  </div>
+</div>

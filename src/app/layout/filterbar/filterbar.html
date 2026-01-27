@@ -1,0 +1,53 @@
+<div class="text-xs md:fixed right-0 md:mt-20 md:mr-13 p-5 md:p-0 order-2 md:order-3 w-1/2 md:w-fit top-0 shrink-0 h-full border-black/15 border-y md:border-0 border-l flex flex-col gap-5">
+
+  <!-- Sort Section -->
+  <div class="flex flex-col gap-3">
+    <button (click)="toggleMenu()" class="text-center md:text-start">
+      SORT
+    </button>
+
+    <!-- Mobile Menu Modal -->
+    <!-- <app-menu-modal
+      *ngIf="isOpen"
+      [isMenuOpen]="isOpen"
+      [menuData]="SORT"
+      [color]="COLORS"
+      (closeMenu)="isOpen=false"
+    ></app-menu-modal> -->
+
+    <ul>
+        @for (data of SORT; track $index) {
+            <li>{{data}}</li>
+        }
+    </ul>
+
+    <ul>
+         @for (data of COLORS; track $index) {
+            <li>{{data}}</li>
+        }
+    </ul>
+
+    <!-- Desktop Menu -->
+    <ul class="md:flex hidden flex-col gap-1 items-start">
+      <!-- <li *ngFor="let option of SORT; let i = index">
+        <button (click)="handleSearch(option)" class="hover:underline cursor-pointer">
+          {{ option }}
+        </button>
+      </li> -->
+    </ul>
+  </div>
+
+  <!-- Colors Section (Optional) -->
+  <!--
+  <div class="md:flex hidden flex-col gap-3">
+    <h1>COLORS</h1>
+    <ul class="flex flex-col gap-1 items-start">
+      <li *ngFor="let color of COLORS; let i=index">
+        <button class="hover:underline cursor-pointer" [class.underline]="color==='all colors'">
+          {{ color }}
+        </button>
+      </li>
+    </ul>
+  </div>
+  -->
+</div>

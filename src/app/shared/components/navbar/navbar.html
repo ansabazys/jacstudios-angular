@@ -36,11 +36,12 @@
     JAC
   </a>
 
+
   <!-- Right section -->
   <section class="flex z-10 md:gap-8 justify-end gap-5 text-xs">
     <!-- Auth Links -->
-
     @if (user$ | async) {
+      
       <a routerLink="/account" class="hidden md:flex">ACCOUNT</a>
     } @else {
       <a routerLink="/login" class="hidden md:flex">LOGIN</a>
@@ -48,8 +49,8 @@
 
     <!-- Cart -->
     <button class="flex gap-1">
-      <a routerLink="/cart">BAG</a>
-      <span>(0)</span>
+      <a routerLink="/store/cart">BAG</a>
+      <span>{{ cart$ | async }}</span>
     </button>
 
     <!-- Mobile Menu -->

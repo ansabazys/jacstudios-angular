@@ -1,0 +1,129 @@
+<div class="flex py-20 px-5 md:px-15 gap-8 flex-wrap md:flex-nowrap text-xs justify-evenly w-full">
+
+  <!-- LEFT: Checkout Form -->
+  <div class="w-full max-w-5xl flex flex-col gap-6">
+    <h1 class="text-lg font-semibold">CHECKOUT</h1>
+
+ 
+    <!-- Contact Info -->
+    <ng-container *ngIf="user$ | async as user">
+      <div class="flex flex-col gap-2 border-b border-black/15 pb-4">
+        <h2 class="font-semibold">Contact Information</h2>
+        <p class="text-black/70 text-sm">{{ user.email }}</p>
+        <a routerLink="/login" class="text-xs text-black/50">
+          Not your account? Sign in as another user.
+        </a>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="flex flex-col gap-3 border-b border-black/15 pb-4">
+        <h2 class="font-semibold">Shipping Address</h2>
+
+        <div class="grid md:grid-cols-2 gap-2">
+          <input
+            type="text"
+            placeholder="Full Name"
+            class="border px-3 py-2 rounded-md"
+            [value]="address.fullName"
+            (input)="onChange('fullName', $event.target.value)"
+          />
+
+          <input
+            type="text"
+            placeholder="Phone Number"
+            class="border px-3 py-2 rounded-md"
+            [value]="address.phoneNumber"
+            (input)="onChange('phoneNumber', $event.target.value)"
+          />
+
+          <input
+            type="text"
+            placeholder="Address Line"
+            class="border px-3 py-2 rounded-md col-span-2"
+            [value]="address.addressLine"
+            (input)="onChange('addressLine', $event.target.value)"
+          />
+
+          <input
+            type="text"
+            placeholder="City"
+            class="border px-3 py-2 rounded-md"
+            [value]="address.city"
+            (input)="onChange('city', $event.target.value)"
+          />
+
+          <input
+            type="text"
+            placeholder="State"
+            class="border px-3 py-2 rounded-md"
+            [value]="address.state"
+            (input)="onChange('state', $event.target.value)"
+          />
+
+          <input
+            type="text"
+            placeholder="Postal Code"
+            class="border px-3 py-2 rounded-md"
+            [value]="address.postalCode"
+            (input)="onChange('postalCode', $event.target.value)"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Payment -->
+    <div class="flex flex-col gap-3 border-b border-black/15 pb-4">
+      <h2 class="font-semibold">Payment Method</h2>
+      <label class="flex items-center gap-2">
+        <input type="radio" checked />
+        Cash on Delivery
+      </label>
+      <label class="flex items-center gap-2 opacity-50">
+        <input disabled type="radio" />
+        Online Payment
+      </label>
+    </div>
+
+    <button
+      class="w-full bg-black text-white py-3 text-xs mt-3"
+      (click)="placeOrder()">
+      PLACE ORDER
+    </button>
+  </div>
+
+  <!-- RIGHT: Order Summary -->
+  <ng-container *ngIf="cart$ | async as cart">
+    <div class="flex flex-col w-full md:w-[350px] gap-3 border rounded-lg p-4">
+      <h1 class="font-semibold border-b pb-2">ORDER SUMMARY</h1>
+
+      <div class="flex flex-col gap-3 max-h-[250px] overflow-y-auto">
+        <div *ngFor="let item of cart.items" class="flex justify-between">
+          <div class="flex gap-2 items-center">
+            <img
+              [src]="'http://localhost:3000/uploads/'+item.productId.images[0]"
+              class="w-12 h-12 object-cover rounded"
+            />
+            <div>
+              <p>{{ item.productName }}</p>
+              <p class="text-black/50 text-[.6rem]">
+                Qty: {{ item.quantity }}
+              </p>
+            </div>
+          </div>
+          <p>₹{{ item.productId.price }}</p>
+        </div>
+      </div>
+
+      <div class="border-t pt-3">
+        <div class="flex justify-between">
+          <p>Subtotal</p>
+          <p>₹{{ cart.totalAmount }}</p>
+        </div>
+        <div class="flex justify-between font-semibold">
+          <p>Total</p>
+          <p>₹{{ cart.totalAmount }}.00 INR</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

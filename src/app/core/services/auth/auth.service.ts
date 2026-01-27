@@ -15,15 +15,12 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   checkAuth() {
-    return this.http.get<IUser>(`${this.url}/me`, { withCredentials: true }).subscribe({
-      next: (user: IUser) => {
-        this.userSubject.next(user);
-        console.log(user);
-      },
-      error: () => {
-        this.userSubject.next(null);
-      },
-    });
+    return this.http.get<IUser>(`${this.url}/me`, { withCredentials: true }).pipe(
+      tap({
+        next: (user) => this.userSubject.next(user),
+        error: () => this.userSubject.next(null),
+      }),
+    );
   }
 
   isAuthenticated(): boolean {
@@ -32,7 +29,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post(`${this.url}/login`, { email, password }, { withCredentials: true }).pipe(
-      switchMap(() => this.http.get<IUser>(`${this.url}/login`, { withCredentials: true })),
+      switchMap(() => this.http.get<IUser>(`${this.url}/me`, { withCredentials: true })),
       tap((user) => this.userSubject.next(user)),
     );
   }

@@ -1,0 +1,29 @@
+<div class="flex justify-between border-b p-2">
+  <div class="flex">
+    <img
+      [src]="'http://localhost:3000/uploads/' + item.productId.images[0]"
+      alt="{{ item.productName }}"
+      class="w-20 p-2"
+    />
+    <div class="flex flex-col justify-between py-2">
+      <div>
+        <h1>{{ item.productName }}</h1>
+        <p>Quantity: {{ quantity }}</p>
+        <p>SIZE: {{ item.selectedSize }}</p>
+      </div>
+      <div class="underline cursor-pointer">
+        <p>Move to Wishlist</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-between items-end py-2">
+    <h1>Rs {{ item.productId.price }} INR</h1>
+    <div class="flex gap-2 text-xl">
+      <button (click)="decreaseQuantity()">-</button>
+      <span>{{ quantity }}</span>
+      <button (click)="increaseQuantity()">+</button>
+    </div>
+    <button class="text-red-500 mt-2" (click)="removeItem()">Remove</button>
+  </div>
+</div>

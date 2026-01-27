@@ -1,0 +1,81 @@
+
+
+<!-- Hero Component -->
+<app-hero></app-hero>
+
+<!-- Featured Collection -->
+<section class="py-20 px-6 md:px-20">
+  <h2 class="text-2xl md:text-4xl font-bold mb-8 text-center">
+    Featured Collection
+  </h2>
+
+  <div class="overflow-x-scroll scrollbar-hide flex w-full">
+    <!-- <div
+      *ngFor="let product of products; let i = index"
+      class="relative shrink-0 overflow-hidden group cursor-pointer"
+      (click)="goToStore(product._id)"
+    >
+      <img
+        [src]="'https://your-image-url/' + product.images[0]"
+        [alt]="product.title"
+        class="w-[380px] shrink-0 object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div
+        class="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all"
+      >
+        <h3 class="text-lg font-semibold tracking-wider">{{ product.title }}</h3>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+<!-- Shop by Category -->
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-2xl md:text-4xl font-bold mb-10">Shop by Category</h2>
+    <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div
+        *ngFor="let cat of categories; let i = index"
+        class="relative overflow-hidden cursor-pointer"
+        (click)="goToCategory(cat._id)"
+      >
+        <img
+          [src]="catImages[i]"
+          [alt]="cat.title"
+          class="w-full h-56 object-cover"
+        />
+        <div
+          class="absolute inset-0 bg-black/40 flex items-center justify-center text-white font-semibold text-lg"
+        >
+          {{ cat.title }}
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="py-20 px-6 md:px-20 bg-black text-white text-center">
+  <h2 class="text-2xl md:text-3xl font-semibold mb-6">
+    Stay in the Loop
+  </h2>
+  <p class="mb-8 text-white/70">
+    Get exclusive offers, style tips, and early access to drops.
+  </p>
+  <form class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+    <input
+      type="email"
+      placeholder="Enter your email"
+      class="px-4 py-3 rounded-full border border-white text-white w-full outline-none"
+    />
+    <button
+      type="submit"
+      class="bg-white text-black font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition"
+    >
+      Subscribe
+    </button>
+  </form>
+</section>
+
+<!-- Footer Component -->
+<!-- <app-footer></app-footer> -->

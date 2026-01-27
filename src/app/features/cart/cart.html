@@ -1,0 +1,49 @@
+
+<div class="flex py-20 px-5 md:px-15 gap-8 flex-wrap md:flex-nowrap text-xs justify-evenly w-full">
+  
+    
+
+  <!-- Cart Items -->
+  <div class="h-full w-full max-w-5xl flex flex-col items-center">
+    <div class="max-w-5xl w-full flex flex-col gap-8">
+      <h1>SHOPPING BAG</h1>
+      <div class="flex justify-between border-b border-b-black/15 py-2 text-black/50">
+        <h1>ITEM</h1>
+        <h1>TOTAL</h1>
+      </div>
+
+
+      <ng-container *ngIf="cart$ | async as cart">
+
+        <app-cart-item *ngFor="let item of cart.items" [item]="item"></app-cart-item>
+
+        <div class="flex flex-col gap-1 py-5 w-full">
+          <div class="flex flex-col gap-2">
+            <div class="flex w-full justify-between"><h1>Total</h1><p>₹{{cart.totalAmount}}</p></div>
+            <div class="flex w-full justify-between"><h1>Shipping estimate</h1><p>Calculated at Checkout</p></div>
+            <div class="flex w-full justify-between"><h1>Duties</h1><p>Calculated at Checkout</p></div>
+          </div>
+          <div class="flex w-full justify-between font-bold"><h1>Order Total</h1><p>₹{{cart.totalAmount}}.00 INR</p></div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- User Info + Checkout -->
+  <div class="flex flex-col w-full md:w-fit gap-3">
+    <h1>LOGGED IN AS</h1>
+    <ng-container *ngIf="user$ | async as user">
+      <div>
+        <h1>{{user.name}} ({{user.email}})</h1>
+        <p class="text-black/50">Not your account? Sign in as another user.</p>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="cart$ | async as cart">
+      <button
+        class="w-full text-xs bg-black text-white py-3 rounded"
+        (click)="proceedToCheckout(cart.items)">
+        PROCEED TO CHECKOUT
+      </button>
+    </ng-container>
+  </div>
+</div>
