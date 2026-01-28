@@ -8,8 +8,12 @@
         <!-- Search Icon Placeholder -->
         <i class="icon-search"></i>
       </span>
-      <span class="hidden md:block">SEARCH</span>
+      <span class="hidden md:block" (click)="toggleSearch()">SEARCH</span>
     </button>
+
+    @if (showSearch()) {
+      <app-product-search [showSearch]="showSearch" (close)="showSearch.set(false)" />
+    }
 
     <button>
       <!-- Wishlist Icon Placeholder -->
@@ -36,12 +40,10 @@
     JAC
   </a>
 
-
   <!-- Right section -->
   <section class="flex z-10 md:gap-8 justify-end gap-5 text-xs">
     <!-- Auth Links -->
     @if (user$ | async) {
-      
       <a (click)="logOut()" class="hidden md:flex">LOGOUT</a>
     } @else {
       <a routerLink="/store/login" class="hidden md:flex">LOGIN</a>

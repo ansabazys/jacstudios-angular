@@ -34,4 +34,8 @@ export class ProductService {
   getProductById(productId: string) {
     return this.http.get<IProduct>(`${this.url}/products/${productId}`, { withCredentials: true });
   }
+
+  searchProducts(query: string) {
+   return this.http.get<IProduct[]>(`${this.url}/search?q=${query}`)
+  }
 }
