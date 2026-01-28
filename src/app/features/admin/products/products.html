@@ -1,0 +1,161 @@
+<div class="bg-white rounded-lg shadow-sm p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">Products</h2>
+    <button
+      (click)="openModal()"
+      class="bg-black text-white px-4 py-2 text-sm font-medium rounded hover:bg-gray-800 transition-colors"
+    >
+      Add Product
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-gray-50 text-gray-500 uppercase tracking-wider text-xs">
+        <tr>
+          <th class="px-6 py-3 font-medium">Product</th>
+          <th class="px-6 py-3 font-medium">Category</th>
+          <th class="px-6 py-3 font-medium">Price</th>
+          <th class="px-6 py-3 font-medium">Stock</th>
+          <th class="px-6 py-3 font-medium">Status</th>
+          <th class="px-6 py-3 font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 border border-gray-100">
+        <tr
+          *ngFor="let product of productsData$ | async"
+          class="hover:bg-gray-50 transition-colors"
+        >
+          <td class="px-6 py-4">
+            <div class="flex items-center">
+              <div class="h-10 w-10 flex-shrink-0">
+                <img  [src]="'http://localhost:3000/uploads/' + product?.images" alt="" class="h-10 w-10 rounded object-cover" />
+              </div>
+              <div class="ml-4">
+                <div class="font-medium text-gray-900">{{ product.title }}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 text-gray-500">{{ product.categoryId }}</td>
+          <td class="px-6 py-4 font-medium">{{ product.price }}</td>
+          <td class="px-6 py-4 text-gray-500">{{ product.stockStatus }}</td>
+          <td class="px-6 py-4">
+            <!-- <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+              [ngClass]="{
+                'bg-green-100 text-green-800': product. === 'Active',
+                'bg-gray-100 text-gray-800': product.status === 'Draft',
+                'bg-red-100 text-red-800': product.status === 'Archived',
+              }"
+            > -->
+              {{ product.stockStatus }}
+            <!-- </span> -->
+          </td>
+          <td class="px-6 py-4">
+            <button (click)="openModal(product)" class="text-blue-600 hover:text-blue-900 mr-3">
+              Edit
+            </button>
+            <!-- <button (click)="deleteProduct(product.id)" class="text-red-600 hover:text-red-900">
+              Delete
+            </button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Product Modal -->
+<!-- <dialog class="rounded-lg shadow-xl p-0 w-full max-w-md backdrop:bg-black/50" #productModal>
+  <div class="p-6">
+    <h3 class="text-lg font-bold mb-4">{{ isEditing ? 'Edit' : 'Add' }} Product</h3>
+    <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            [(ngModel)]="currentProduct.name"
+            name="name"
+            required
+            class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Category</label>
+          <select
+            [(ngModel)]="currentProduct.category"
+            name="category"
+            required
+            class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+          >
+            <option *ngFor="let cat of categories()" [value]="cat.name">{{ cat.name }}</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Price</label>
+            <input
+              type="number"
+              [(ngModel)]="currentProduct.price"
+              name="price"
+              required
+              min="0"
+              class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Stock</label>
+            <input
+              type="number"
+              [(ngModel)]="currentProduct.stock"
+              name="stock"
+              required
+              min="0"
+              class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Status</label>
+          <select
+            [(ngModel)]="currentProduct.status"
+            name="status"
+            required
+            class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+          >
+            <option value="Active">Active</option>
+            <option value="Draft">Draft</option>
+            <option value="Archived">Archived</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Image URL</label>
+          <input
+            type="text"
+            [(ngModel)]="currentProduct.image"
+            name="image"
+            required
+            class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+          />
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end space-x-3">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="!productForm.form.valid"
+          class="px-4 py-2 text-sm font-medium text-white bg-black rounded hover:bg-gray-800 disabled:opacity-50"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog> -->

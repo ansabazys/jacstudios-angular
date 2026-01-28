@@ -2,20 +2,36 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IProduct, IProductApiResponse } from '../../../model/interface/products';
+import { BehaviorSubject, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private url = environment.apiUrl;
+  private productSubject = new BehaviorSubject<IProductApiResponse | null>(null);
+  products$ = this.productSubject.asObservable();
+
+  private productsDataSubject = new BehaviorSubject<IProduct[] | null>(null);
+  productsData$ = this.productsDataSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.http.get<IProductApiResponse>(`${this.url}/products`, { withCredentials: true });
+    if (this.productSubject.value) {
+      return of(this.productSubject.value); // cached value
+    }
+    return this.http
+      .get<IProductApiResponse>(`${this.url}/admin/products`, { withCredentials: true })
+      .pipe(
+        tap((products) => {
+          this.productSubject.next(products);
+          this.productsDataSubject.next(products.products);
+        }),
+      );
   }
 
   getProductById(productId: string) {
-    return this.http.get<IProduct>(`${this.url}/products/${productId}`, { withCredentials: true })
+    return this.http.get<IProduct>(`${this.url}/products/${productId}`, { withCredentials: true });
   }
 }

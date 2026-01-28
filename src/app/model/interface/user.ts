@@ -3,7 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   status: 'active' | 'inactive';
-
+  role?: 'admin' | 'superadmin';
   address?: IUserAddress; // optional because it may be empty
 
   createdAt: string;
@@ -17,4 +17,10 @@ export interface IUserAddress {
   state: string;
   postalCode: string;
   addressLine: string;
+}
+
+export interface IUserApiResponse {
+  users: IUser[];
+  totalPages: number;
+  totalCount: number;
 }

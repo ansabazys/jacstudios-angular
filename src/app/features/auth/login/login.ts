@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +15,22 @@ export class Login {
   loading = false;
   error = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   login() {
     this.loading = true;
     this.error = '';
-
-    this.authService.login(this.email, this.password).subscribe((res) => {
-      this.router.navigate(['/store'])
-    });
+    if (this.router.url.includes('admin')) {
+       this.authService.loginAdmin(this.email, this.password).subscribe((res) => {
+        this.router.navigate(['/admin/dashboard']);
+      });
+    } else {
+      this.authService.login(this.email, this.password).subscribe((res) => {
+        this.router.navigate(['/store']);
+      });
+    }
   }
 }

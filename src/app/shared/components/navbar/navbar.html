@@ -20,11 +20,11 @@
   <!-- Desktop Navigation -->
   <nav class="left-0 fixed md:flex w-full justify-center hidden">
     <ul class="flex tracking-tight justify-center items-center gap-10 text-xs">
-      <a routerLink="/store" class="underline font-bold">SHOP ALL</a>
+      <a routerLink="/store" routerLinkActive="underline" class="font-bold">SHOP ALL</a>
       <a>WHAT'S NEW</a>
       <a routerLink="/" class="text-2xl font-black tracking-tighter italic">JAC</a>
       <a>HOT SALE</a>
-      <a routerLink="/store/orders">MY ORDERS</a>
+      <a routerLink="/store/orders" routerLinkActive="underline">MY ORDERS</a>
     </ul>
   </nav>
 
@@ -42,7 +42,7 @@
     <!-- Auth Links -->
     @if (user$ | async) {
       
-      <a routerLink="/account" class="hidden md:flex">ACCOUNT</a>
+      <a (click)="logOut()" class="hidden md:flex">LOGOUT</a>
     } @else {
       <a routerLink="/login" class="hidden md:flex">LOGIN</a>
     }

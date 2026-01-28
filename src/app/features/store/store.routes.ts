@@ -2,22 +2,30 @@ import { Routes } from '@angular/router';
 import { Store } from './store';
 import { ProductDetails } from './product-details/product-details';
 import { authGuard } from '../../core/guards/auth/auth-guard';
+import { Login } from '../auth/login/login';
+import { Register } from '../auth/register/register';
 
 export const storeRoutes: Routes = [
   {
     path: '',
     component: Store,
   },
+  { path: 'login', component: Login },
+  { path: 'admin/login', component: Login },
+  { path: 'register', component: Register },
   { path: 'product/:id', component: ProductDetails },
-  { path: 'cart', canActivate: [authGuard],
-    loadComponent: () => import('../cart/cart').then((m) => m.Cart) },
+  {
+    path: 'cart',
+    canActivate: [authGuard],
+    loadComponent: () => import('../cart/cart').then((m) => m.Cart),
+  },
   {
     path: 'checkout',
     canActivate: [authGuard],
     loadComponent: () => import('../checkout/checkout').then((m) => m.Checkout),
   },
 
-    {
+  {
     path: 'orders',
     canActivate: [authGuard],
     loadComponent: () => import('../orders/orders').then((m) => m.Orders),

@@ -1,16 +1,18 @@
 import { Routes } from '@angular/router';
-import { Login } from './features/auth/login/login';
-import { Register } from './features/auth/register/register';
-import { Store } from './features/store/store';
 import { Home } from './features/home/home';
+import { adminGuard } from './core/guards/admin/admin-guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
+
   {
     path: 'store',
     loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes),
+  },
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    loadChildren: () => import('./features/admin/layout/layout.routes').then((m) => m.layoutRoutes),
   },
   //   {
   //     path: 'cart',

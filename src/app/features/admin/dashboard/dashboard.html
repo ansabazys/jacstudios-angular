@@ -1,0 +1,98 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold tracking-tight text-gray-900">Dashboard Overview</h1>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <p class="text-sm font-medium text-gray-500">Total Sales</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">{{ totalSales() | currency }}</p>
+          <div class="mt-2 text-sm text-green-600 flex items-center">
+            <span>+12.5%</span>
+            <span class="text-gray-400 ml-1">vs last month</span>
+          </div>
+        </div> -->
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <p class="text-sm font-medium text-gray-500">Total Orders</p>
+      @if (orders$ | async; as item) {
+        <p class="mt-2 text-3xl font-bold text-gray-900">{{ item.ordersCount }}</p>
+        <div class="mt-2 text-sm text-green-600 flex items-center">
+          <span>+8.2%</span>
+          <span class="text-gray-400 ml-1">vs last month</span>
+        </div>
+      }
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <p class="text-sm font-medium text-gray-500">Total Products</p>
+      @if (products$ | async; as item) {
+        <p class="mt-2 text-3xl font-bold text-gray-900">{{ item.totalCount }}</p>
+        <div class="mt-2 text-sm text-gray-500 flex items-center">
+          <span>{{ item.products.length }} Active</span>
+        </div>
+      } @else {
+        <p class="mt-2 text-3xl font-bold text-gray-900">0</p>
+      }
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <p class="text-sm font-medium text-gray-500">Total Users</p>
+
+      @if (users$ | async; as item) {
+        <p class="mt-2 text-3xl font-bold text-gray-900">{{ item.totalCount }}</p>
+        <div class="mt-2 text-sm text-green-600 flex items-center">
+          <span>+2.1%</span>
+          <span class="text-gray-400 ml-1">vs last month</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Recent Orders Section -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+      <h3 class="text-lg font-semibold text-gray-900">Recent Orders</h3>
+      <button class="text-sm text-blue-600 hover:text-blue-800 font-medium">View All</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-50 text-gray-500 uppercase tracking-wider text-xs">
+          <tr>
+            <th class="px-6 py-3 font-medium">Order ID</th>
+            <th class="px-6 py-3 font-medium">Customer</th>
+            <th class="px-6 py-3 font-medium">Date</th>
+            <th class="px-6 py-3 font-medium">Total</th>
+            <th class="px-6 py-3 font-medium">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (order of orderData$ | async; track $index) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-medium text-gray-900">{{ order._id }}</td>
+              @if (typeof order.userId !== 'string') {
+                <td class="px-6 py-4 text-gray-500">{{ order.userId.name }}</td>
+              }
+              <td class="px-6 py-4 text-gray-500">{{ order.createdAt | date: 'mediumDate'}}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">
+                {{ order.totalAmount | currency }}
+              </td>
+              <td class="px-6 py-4">
+                <span
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                  [ngClass]="{
+                    'bg-green-100 text-green-800': order.orderStatus === 'completed',
+                    'bg-blue-100 text-blue-800': order.orderStatus === 'returned',
+                    'bg-yellow-100 text-red-800': order.orderStatus === 'canceled',
+                    'bg-gray-100 text-gray-800': order.orderStatus === 'pending',
+                  }"
+                >
+                  {{ order.orderStatus }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
