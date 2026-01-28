@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { ICategoryResponse } from '../../../model/interface/category';
+import { ICategory, ICategoryResponse } from '../../../model/interface/category';
 import { BehaviorSubject, of, tap } from 'rxjs';
 
 @Injectable({
@@ -10,6 +10,9 @@ import { BehaviorSubject, of, tap } from 'rxjs';
 export class CategoryService {
   private categorySubject = new BehaviorSubject<ICategoryResponse | null>(null);
   categories$ = this.categorySubject.asObservable();
+
+  private categoryDataSubject = new BehaviorSubject<ICategory[] | []>([]);
+  categoriesData$ = this.categoryDataSubject.asObservable();
   url = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
@@ -24,6 +27,7 @@ export class CategoryService {
       .pipe(
         tap((res) => {
           this.categorySubject.next(res);
+          this.categoryDataSubject.next(res.category);
         }),
       );
   }

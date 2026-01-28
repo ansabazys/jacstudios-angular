@@ -22,7 +22,7 @@ export class ProductService {
       return of(this.productSubject.value); // cached value
     }
     return this.http
-      .get<IProductApiResponse>(`${this.url}/admin/products`, { withCredentials: true })
+      .get<IProductApiResponse>(`${this.url}/products`, { withCredentials: true })
       .pipe(
         tap((products) => {
           this.productSubject.next(products);

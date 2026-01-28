@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ProductService } from '../../../core/services/product/product.service';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { OrderService } from '../../../core/services/order/order.service';
@@ -24,7 +24,7 @@ export class Layout implements OnInit {
   ngOnInit(): void {
     this.productService.getProducts().subscribe(); // triggers the fetch
     this.categoryService.getCategories().subscribe();
-    this.orderService.getAdminOrders().subscribe((res) => console.log(res));
+    this.orderService.getAdminOrders().subscribe();
     this.userService.getUsers().subscribe();
   }
 
