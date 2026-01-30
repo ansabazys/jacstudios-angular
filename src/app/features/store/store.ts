@@ -10,7 +10,7 @@ import { ICategoryProducts } from '../../model/interface/category';
 
 @Component({
   selector: 'app-store',
-  imports: [Sidebar, ProductGrid, Filterbar, Navbar],
+  imports: [Sidebar, ProductGrid, Filterbar],
   templateUrl: './store.html',
   styleUrl: './store.css',
 })

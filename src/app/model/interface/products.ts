@@ -5,20 +5,21 @@ export interface ISize {
 }
 
 export interface IProduct {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   images: string[];
+  imageFile?: File | null
   price: number;
   categoryId: string;
   stockStatus: string;      // e.g., "out of stock"
   sizes: ISize[];
-  reviews: any[];           // can define a separate interface for reviews if needed
-  isDeleted: boolean;
-  views: number;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  reviews?: any[];           // can define a separate interface for reviews if needed
+  isDeleted?: boolean;
+  views?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }
 
 

@@ -16,8 +16,8 @@
     ></app-menu-modal> -->
 
     <ul>
-        @for (data of SORT; track $index) {
-            <li>{{data}}</li>
+        @for (item of SORT; track $index) {
+            <li class="cursor-pointer" (click)="sortProducts(item.sort)">{{item.data}}</li>
         }
     </ul>
 

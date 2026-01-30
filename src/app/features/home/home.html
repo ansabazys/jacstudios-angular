@@ -10,7 +10,7 @@
     @for (product of productsData$ | async; track product._id) {
       <div
         class="relative shrink-0 overflow-hidden group cursor-pointer"
-        (click)="goToStore(product._id)"
+        (click)="goToStore(product._id!)"
       >
         <img
              [src]="'http://localhost:3000/uploads/' + product?.images"

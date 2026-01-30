@@ -1,28 +1,44 @@
 import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../core/services/product/product.service';
 // import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-filterbar',
   imports: [CommonModule, FormsModule],
   templateUrl: './filterbar.html',
-  styleUrls: ['./filterbar.css']
+  styleUrls: ['./filterbar.css'],
 })
 export class Filterbar implements OnInit {
-  
   @Output() updateProducts = new EventEmitter<any[]>();
 
-  SORT = ["Latest arrivals", "Price: Low to high", "Price: High to low"];
+  SORT = [
+    { data: 'Price: Low to high', sort: 'low' },
+    { data: 'Price: High to low', sort: 'high' },
+  ];
   COLORS = [
-    "all colors","black","blue","brown","burgundy","gray","green",
-    "navy","orange","pink","purple","red","tan","white","yellow"
+    'all colors',
+    'black',
+    'blue',
+    'brown',
+    'burgundy',
+    'gray',
+    'green',
+    'navy',
+    'orange',
+    'pink',
+    'purple',
+    'red',
+    'tan',
+    'white',
+    'yellow',
   ];
 
   isOpen = false;
   width = window.innerWidth;
 
-  // constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {}
 
@@ -35,6 +51,10 @@ export class Filterbar implements OnInit {
     if (this.width < 768) {
       this.isOpen = !this.isOpen;
     }
+  }
+
+  sortProducts(price: string) {
+    this.productService.searchProducts('', price).subscribe();
   }
 
   // async fetchProducts(priceQuery: string = "") {

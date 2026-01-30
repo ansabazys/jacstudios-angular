@@ -1,0 +1,178 @@
+<div class="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">{{ isEditing ? 'Edit' : 'Add' }} Product</h2>
+    <button routerLink="/admin/products" class="text-gray-500 hover:text-gray-700">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <form (ngSubmit)="saveProduct()" #productForm="ngForm" class="space-y-6">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Name</label>
+      <input
+        type="text"
+        [(ngModel)]="currentProduct.title"
+        name="name"
+        required
+        class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Category</label>
+      <select
+        [(ngModel)]="currentProduct.categoryId"
+        name="category"
+        required
+        class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+      >
+        <option value="" disabled>Select a category</option>
+        <option *ngFor="let cat of categories$ | async" [value]="cat._id">{{ cat.title }}</option>
+      </select>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Price</label>
+        <input
+          type="number"
+          [(ngModel)]="currentProduct.price"
+          name="price"
+          required
+          min="0"
+          class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Stock</label>
+        <input
+          type="number"
+          [(ngModel)]="currentProduct.stockStatus"
+          name="stock"
+          required
+          min="0"
+          class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+        />
+      </div>
+    </div>
+
+    <!-- <div>
+      <label class="block text-sm font-medium text-gray-700">Status</label>
+      <select
+        [(ngModel)]="currentProduct.stockStatus"
+        name="status"
+        required
+        class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+      >
+        <option value="Active">Active</option>
+        <option value="Draft">Draft</option>
+        <option value="Archived">Archived</option>
+      </select>
+    </div> -->
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Image</label>
+
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onImageSelect($event)"
+        class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-2 border"
+      />
+
+      <div *ngIf="imagePreview" class="mt-2">
+        <img
+          [src]="imagePreview()"
+          alt="Preview"
+          class="h-20 w-20 object-cover rounded border border-gray-200"
+        />
+      </div>
+
+      <div>
+        <div class="flex justify-between items-center">
+          <label class="block text-sm font-medium text-gray-700">Sizes & Stock</label>
+          <button
+            type="button"
+            (click)="addSize()"
+            class="text-xs text-blue-600 hover:text-blue-800 font-medium"
+          >
+            + Add Size
+          </button>
+        </div>
+        <div class="mt-2 space-y-2 max-h-60 overflow-y-auto pr-1">
+          <div
+            *ngFor="let size of currentProduct.sizes; let i = index"
+            class="flex items-center space-x-2 bg-gray-50 p-2 rounded"
+          >
+            <input
+              type="text"
+              [(ngModel)]="size.size"
+              [name]="'size_name_' + i"
+              placeholder="Size (e.g. M)"
+              required
+              class="block w-1/3 rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-1 border"
+            />
+            <input
+              type="number"
+              [(ngModel)]="size.stock"
+              [name]="'size_stock_' + i"
+              placeholder="Qty"
+              required
+              min="0"
+              class="block w-1/3 rounded border-gray-300 shadow-sm focus:border-black focus:ring-black sm:text-sm p-1 border"
+            />
+            <button type="button" (click)="removeSize(i)" class="text-red-500 hover:text-red-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </button>
+          </div>
+          <p *ngIf="currentProduct.sizes.length === 0" class="text-sm text-gray-500 italic">
+            No sizes added yet.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-3 pt-4">
+      <button
+        type="button"
+        routerLink="/admin/products"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="!productForm.form.valid"
+        class="px-4 py-2 text-sm font-medium text-white bg-black rounded hover:bg-gray-800 disabled:opacity-50"
+      >
+        Save Product
+      </button>
+    </div>
+  </form>
+</div>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IProduct, IProductApiResponse } from '../../../model/interface/products';
-import { BehaviorSubject, of, tap } from 'rxjs';
+import { BehaviorSubject, of, switchMap, tap } from 'rxjs';
 import { ICategoryProducts } from '../../../model/interface/category';
 
 @Injectable({
@@ -46,7 +46,32 @@ export class ProductService {
     return this.http.get<IProduct>(`${this.url}/products/${productId}`, { withCredentials: true });
   }
 
-  searchProducts(query: string) {
+  searchProducts(query?: string, price?: string) {
+    if (price) {
+      return this.http.get<IProduct[]>(`${this.url}/search?price=${price}`).pipe(
+        tap((products) => {
+          this.productsDataSubject.next(products);
+        }),
+      );
+    }
     return this.http.get<IProduct[]>(`${this.url}/search?q=${query}`);
+  }
+
+  addProduct(data: FormData) {
+    return this.http
+      .post(`${this.url}/admin/products`, data, { withCredentials: true })
+      .pipe(switchMap(() => this.getProducts()));
+  }
+
+  deleteProduct(id: string, catId: string) {
+    return this.http
+      .delete(`${this.url}/admin/products/${id}/${catId}`, { withCredentials: true })
+      .pipe(switchMap(() => this.getProducts()));
+  }
+
+  updateProduct(id: string, data: FormData) {
+    return this.http
+      .put(`${this.url}/admin/products/${id}`, data, { withCredentials: true })
+      .pipe(switchMap(() => this.getProducts()));
   }
 }

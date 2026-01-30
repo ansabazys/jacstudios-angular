@@ -3,13 +3,13 @@
 import { IProduct } from "./products";
 
 export interface ICategory {
-  _id: string;
+  _id?: string;
   title: string;
-  description: string;
-  productsCount: number;
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
-  __v: number;
+  description?: string;
+  productsCount?: number;
+  createdAt?: string; // ISO date string
+  updatedAt?: string; // ISO date string
+  __v?: number;
 }
 
 export interface ICategoryResponse {
