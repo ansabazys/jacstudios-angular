@@ -3,8 +3,8 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../../core/services/cart/cart.service';
-import { ICartResponse } from '../../../model/interface/cart';
-import { ProductSearch } from "../../../features/store/product-search/product-search";
+import { ProductSearch } from '../../../features/store/product-search/product-search';
+import { ProductService } from '../../../core/services/product/product.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +15,7 @@ import { ProductSearch } from "../../../features/store/product-search/product-se
 export class Navbar {
   private authService = inject(AuthService);
   private cartService = inject(CartService);
+  private productService = inject(ProductService);
   user$ = this.authService.user$;
   cart$ = this.cartService.cartCount$;
 

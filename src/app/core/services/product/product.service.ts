@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IProduct, IProductApiResponse } from '../../../model/interface/products';
 import { BehaviorSubject, of, tap } from 'rxjs';
+import { ICategoryProducts } from '../../../model/interface/category';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,9 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    if (this.productSubject.value) {
-      return of(this.productSubject.value); // cached value
-    }
+    // if (this.productsDataSubject.value) {
+    //   return of(this.productsDataSubject.value)
+    // }
     return this.http
       .get<IProductApiResponse>(`${this.url}/products`, { withCredentials: true })
       .pipe(
@@ -31,11 +32,21 @@ export class ProductService {
       );
   }
 
+  getCategoryProducts(id: string) {
+    return this.http
+      .get<ICategoryProducts>(`${this.url}/categories/${id}`, { withCredentials: true })
+      .pipe(
+        tap((products) => {
+          this.productsDataSubject.next(products.products);
+        }),
+      );
+  }
+
   getProductById(productId: string) {
     return this.http.get<IProduct>(`${this.url}/products/${productId}`, { withCredentials: true });
   }
 
   searchProducts(query: string) {
-   return this.http.get<IProduct[]>(`${this.url}/search?q=${query}`)
+    return this.http.get<IProduct[]>(`${this.url}/search?q=${query}`);
   }
 }

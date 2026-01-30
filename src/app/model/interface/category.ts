@@ -1,5 +1,7 @@
 // src/app/model/interface/category.interface.ts
 
+import { IProduct } from "./products";
+
 export interface ICategory {
   _id: string;
   title: string;
@@ -14,4 +16,9 @@ export interface ICategoryResponse {
   category: ICategory[];
   totalPages: number;
   totalCount: number;
+}
+
+export interface ICategoryProducts {
+  products: IProduct[];
+  totalPages: number;
 }

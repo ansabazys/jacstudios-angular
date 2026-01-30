@@ -50,7 +50,7 @@ export class Sidebar implements OnInit {
   }
 
   navigateToCategory(id: string) {
-    this.router.navigate(['/category', id]);
+    this.router.navigate(['/store/category', id]);
   }
 
   @HostListener('window:resize', ['$event'])

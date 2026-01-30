@@ -39,7 +39,7 @@
           <span
             class="px-3 py-1 rounded-full text-white"
             [ngClass]="{
-              'bg-green-500': order.orderStatus === 'Delivered',
+              'bg-green-500': order.orderStatus === 'completed',
               'bg-yellow-500': order.orderStatus === 'pending',
               'bg-gray-400': order.orderStatus === 'canceled'
             }"

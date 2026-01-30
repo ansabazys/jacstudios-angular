@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ProductService } from '../../../core/services/product/product.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class Login {
 
   constructor(
     private authService: AuthService,
+    private productService: ProductService,
     private router: Router,
   ) {}
 
@@ -30,6 +32,7 @@ export class Login {
     } else {
       this.authService.login(this.email, this.password).subscribe((res) => {
         this.router.navigate(['/store']);
+        this.productService.getProducts()
       });
     }
   }

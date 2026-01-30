@@ -17,7 +17,7 @@
 
     <!-- Desktop categories list -->
     <ul class="md:flex hidden flex-col gap-1">
-      @for (data of categories(); track $index) {
+      @for (data of categories(); track data._id) {
         <button
           (click)="navigateToCategory(data._id)"
           class="text-start hover:underline uppercase cursor-pointer"
