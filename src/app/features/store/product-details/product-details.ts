@@ -59,6 +59,7 @@ export class ProductDetails implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    
 
     if (!this.selectedSize) {
       this.error = 'Please select a size';

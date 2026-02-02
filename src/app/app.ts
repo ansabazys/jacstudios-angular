@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class App implements OnInit {
   protected readonly title = signal('jacstudios-angular');
-  isAdmin = signal(false); // ✅ signal works well
+  isAdmin = signal(false); 
 
   constructor(
     private authService: AuthService,
@@ -27,7 +27,7 @@ export class App implements OnInit {
         this.isAdmin.set(event.url.startsWith('/admin'));
       });
 
-    // Or combine with auth check
+
     this.authService.checkAuth().subscribe((user) => {
       if (user?.role === 'superadmin') this.isAdmin.set(true);
     });
